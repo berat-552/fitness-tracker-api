@@ -24,13 +24,13 @@ public class UserRepositoryTests {
 
     @Test
     public void UserRepository_Save_ReturnSavedUser() {
-
         User user = User.TestUser();
 
         User savedUser = userRepository.save(user);
 
         assertThat(savedUser).isNotNull();
         assertThat(savedUser.getId()).isGreaterThan(0);
+        assertThat(savedUser.getWorkouts()).isNotNull();
     }
 
     @Test
@@ -41,6 +41,7 @@ public class UserRepositoryTests {
         User findUser = userRepository.findById(user.getId()).orElse(null);
 
         assertThat(findUser).isNotNull();
+        assertThat(findUser.getWorkouts()).isNotNull();
     }
 
     @Test
@@ -58,7 +59,6 @@ public class UserRepositoryTests {
     @Test
     public void UserRepository_Update_ReturnUserNotNull() {
         User user = User.TestUser();
-
         userRepository.save(user);
 
         String updatedUsername = "new_username32145";
@@ -73,6 +73,7 @@ public class UserRepositoryTests {
         assertThat(updatedUser.getWeightKg()).isNotNull();
         assertThat(updatedUser.getUsername()).isEqualTo(updatedUsername);
         assertThat(updatedUser.getWeightKg()).isEqualTo(updatedWeight);
+        assertThat(updatedUser.getWorkouts()).isNotNull();
     }
 
     @Test

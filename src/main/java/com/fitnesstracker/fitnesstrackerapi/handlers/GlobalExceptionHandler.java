@@ -1,10 +1,7 @@
 package com.fitnesstracker.fitnesstrackerapi.handlers;
 
 import com.fitnesstracker.fitnesstrackerapi.dtos.ErrorResponse;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidEmailException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.PasswordValidationException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserExistsException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserNotFoundException;
+import com.fitnesstracker.fitnesstrackerapi.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,10 +51,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PasswordValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleValidationException(PasswordValidationException ex) {
+    public ResponseEntity<ErrorResponse> handlePasswordValidationException(PasswordValidationException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Password Validation error",
+                LocalDate.now(),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidFieldsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleInvalidFieldsException(InvalidFieldsException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Validation error",
                 LocalDate.now(),
                 ex.getMessage()
         );

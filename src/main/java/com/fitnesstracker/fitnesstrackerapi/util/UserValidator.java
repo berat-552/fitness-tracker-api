@@ -1,12 +1,15 @@
 package com.fitnesstracker.fitnesstrackerapi.util;
 
 import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidEmailException;
+import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidFieldsException;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.PasswordValidationException;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.UserExistsException;
+import com.fitnesstracker.fitnesstrackerapi.models.User;
 import com.fitnesstracker.fitnesstrackerapi.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 @Component
@@ -42,5 +45,19 @@ public class UserValidator {
 
     public boolean userExists(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public void validateUserFields(User userObj) throws InvalidFieldsException, PasswordValidationException {
+        if (userObj.getUsername() == null || userObj.getUsername().isEmpty() ||
+                userObj.getPassword() == null || userObj.getPassword().isEmpty() ||
+                userObj.getHeightCm() == null || Double.isNaN(userObj.getHeightCm()) ||
+                userObj.getWeightKg() == null || Double.isNaN(userObj.getWeightKg()) ||
+                userObj.getDob() == null || userObj.getDob().isAfter(LocalDate.now())) {
+            throw new InvalidFieldsException();
+        }
+
+        if (!isValidPassword(userObj.getPassword())) {
+            throw new PasswordValidationException();
+        }
     }
 }
