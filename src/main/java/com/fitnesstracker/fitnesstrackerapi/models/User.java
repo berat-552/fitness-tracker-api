@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +29,9 @@ public class User {
     private Double heightCm;
     private Double weightKg;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Workout> workouts;
+
     public UserDTO userDTO() {
         return new UserDTO(id, username, dob, heightCm, weightKg);
     }
@@ -39,6 +43,8 @@ public class User {
                 .password("strongPassword?/14zT")
                 .dob(LocalDate.parse("2002-11-05"))
                 .heightCm(179.5)
-                .weightKg(75.5).build();
+                .weightKg(75.5)
+                .workouts(Workout.TestWorkouts(5))
+                .build();
     }
 }

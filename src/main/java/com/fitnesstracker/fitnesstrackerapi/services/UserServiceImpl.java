@@ -1,10 +1,7 @@
 package com.fitnesstracker.fitnesstrackerapi.services;
 
 import com.fitnesstracker.fitnesstrackerapi.dtos.UserDTO;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidEmailException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.PasswordValidationException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserExistsException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserNotFoundException;
+import com.fitnesstracker.fitnesstrackerapi.exceptions.*;
 import com.fitnesstracker.fitnesstrackerapi.models.User;
 import com.fitnesstracker.fitnesstrackerapi.repositories.UserRepository;
 import com.fitnesstracker.fitnesstrackerapi.util.BCryptUtils;
@@ -20,8 +17,10 @@ public class UserServiceImpl implements UserService {
     private final UserValidator userValidator;
 
     @Override
-    public UserDTO createUser(User user) throws UserExistsException, InvalidEmailException, PasswordValidationException {
+    public UserDTO createUser(User user) throws UserExistsException, InvalidEmailException, PasswordValidationException, InvalidFieldsException {
         userValidator.isValidUser(user.getEmail(), user.getPassword());
+
+        userValidator.validateUserFields(user);
 
         String hashedPassword = BCryptUtils.hashPassword(user.getPassword());
 
@@ -39,12 +38,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(Long id, User user) throws UserNotFoundException, InvalidEmailException {
+    public UserDTO updateUser(Long id, User user) throws UserNotFoundException, InvalidEmailException, PasswordValidationException, InvalidFieldsException {
         User existingUser = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
         if (!userValidator.isValidEmail(user.getEmail()))
             throw new InvalidEmailException();
 
+        userValidator.validateUserFields(user);
 
         String hashedPassword = BCryptUtils.hashPassword(user.getPassword());
 

@@ -1,10 +1,7 @@
 package com.fitnesstracker.fitnesstrackerapi.controllers;
 
 import com.fitnesstracker.fitnesstrackerapi.dtos.UserDTO;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidEmailException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.PasswordValidationException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserExistsException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserNotFoundException;
+import com.fitnesstracker.fitnesstrackerapi.exceptions.*;
 import com.fitnesstracker.fitnesstrackerapi.models.User;
 import com.fitnesstracker.fitnesstrackerapi.services.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -20,7 +17,7 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody User user) throws UserExistsException, InvalidEmailException, PasswordValidationException {
+    public ResponseEntity<UserDTO> createUser(@RequestBody User user) throws UserExistsException, InvalidEmailException, PasswordValidationException, InvalidFieldsException {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 
@@ -30,7 +27,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody User user) throws UserNotFoundException, UserExistsException, InvalidEmailException {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody User user) throws UserNotFoundException, InvalidEmailException, PasswordValidationException, InvalidFieldsException {
         return new ResponseEntity<>(userService.updateUser(id, user), HttpStatus.OK);
     }
 

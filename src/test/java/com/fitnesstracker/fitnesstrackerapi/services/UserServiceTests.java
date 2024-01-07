@@ -1,10 +1,7 @@
 package com.fitnesstracker.fitnesstrackerapi.services;
 
 import com.fitnesstracker.fitnesstrackerapi.dtos.UserDTO;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidEmailException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.PasswordValidationException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserExistsException;
-import com.fitnesstracker.fitnesstrackerapi.exceptions.UserNotFoundException;
+import com.fitnesstracker.fitnesstrackerapi.exceptions.*;
 import com.fitnesstracker.fitnesstrackerapi.models.User;
 import com.fitnesstracker.fitnesstrackerapi.repositories.UserRepository;
 import com.fitnesstracker.fitnesstrackerapi.util.UserValidator;
@@ -34,7 +31,7 @@ public class UserServiceTests {
     private UserServiceImpl userService;
 
     @Test
-    public void UserService_CreateUser_ReturnsUser() throws UserExistsException, InvalidEmailException, PasswordValidationException {
+    public void UserService_CreateUser_ReturnsUser() throws UserExistsException, InvalidEmailException, PasswordValidationException, InvalidFieldsException {
         User user = User.TestUser();
 
         doNothing().when(userValidator).isValidUser(anyString(), anyString());
@@ -59,12 +56,11 @@ public class UserServiceTests {
 
 
     @Test
-    public void UserService_UpdateUser_ReturnsUpdatedUser() throws UserNotFoundException, UserExistsException, InvalidEmailException {
+    public void UserService_UpdateUser_ReturnsUpdatedUser() throws UserNotFoundException, InvalidEmailException, PasswordValidationException, InvalidFieldsException {
         User initialUser = User.TestUser();
 
         when(userRepository.findById(initialUser.getId())).thenReturn(Optional.of(initialUser));
         when(userValidator.isValidEmail(anyString())).thenReturn(true);
-        when(userValidator.userExists(anyString())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(initialUser);
 
         String updatedUsername = "updated_username54";
@@ -82,8 +78,8 @@ public class UserServiceTests {
         // Verify that methods were called
         verify(userRepository).findById(initialUser.getId());
         verify(userValidator).isValidEmail(initialUser.getEmail());
-        verify(userValidator).userExists(initialUser.getEmail());
         verify(userRepository).save(any(User.class));
+        verify(userValidator).validateUserFields(initialUser);
     }
 
 
