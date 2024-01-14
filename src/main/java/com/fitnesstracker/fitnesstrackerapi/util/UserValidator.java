@@ -1,5 +1,6 @@
 package com.fitnesstracker.fitnesstrackerapi.util;
 
+import com.fitnesstracker.fitnesstrackerapi.constants.Constants;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidEmailException;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.InvalidFieldsException;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.PasswordValidationException;
@@ -53,7 +54,7 @@ public class UserValidator {
                 userObj.getHeightCm() == null || Double.isNaN(userObj.getHeightCm()) ||
                 userObj.getWeightKg() == null || Double.isNaN(userObj.getWeightKg()) ||
                 userObj.getDob() == null || userObj.getDob().isAfter(LocalDate.now())) {
-            throw new InvalidFieldsException();
+            throw new InvalidFieldsException(Constants.requiredUserFields);
         }
 
         if (!isValidPassword(userObj.getPassword())) {

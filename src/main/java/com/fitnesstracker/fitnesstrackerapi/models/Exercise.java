@@ -2,13 +2,7 @@ package com.fitnesstracker.fitnesstrackerapi.models;
 
 import com.fitnesstracker.fitnesstrackerapi.dtos.ExerciseDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +10,7 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "exercises")
+@ToString(exclude = "workout")
 public class Exercise {
 
     @Id
@@ -28,21 +23,6 @@ public class Exercise {
     @ManyToOne
     @JoinColumn(name = "workout_id")
     private Workout workout;
-
-    public static List<Exercise> TestExercises(int numWanted) {
-
-        List<Exercise> testExercises = new ArrayList<>();
-
-        for (int i = 0; i < numWanted; i++) {
-            testExercises.add(
-                    Exercise.builder()
-                            .name("Exercise name: " + i)
-                            .description("Exercise Description: " + i)
-                            .build()
-            );
-        }
-        return testExercises;
-    }
 
     public ExerciseDTO exerciseDTO() {
         return new ExerciseDTO(id, name, description, workout.getId());
