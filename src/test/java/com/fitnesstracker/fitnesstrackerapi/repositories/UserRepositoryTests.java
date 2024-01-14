@@ -30,7 +30,6 @@ public class UserRepositoryTests {
 
         assertThat(savedUser).isNotNull();
         assertThat(savedUser.getId()).isGreaterThan(0);
-        assertThat(savedUser.getWorkouts()).isNotNull();
     }
 
     @Test
@@ -41,7 +40,6 @@ public class UserRepositoryTests {
         User findUser = userRepository.findById(user.getId()).orElse(null);
 
         assertThat(findUser).isNotNull();
-        assertThat(findUser.getWorkouts()).isNotNull();
     }
 
     @Test
@@ -73,7 +71,6 @@ public class UserRepositoryTests {
         assertThat(updatedUser.getWeightKg()).isNotNull();
         assertThat(updatedUser.getUsername()).isEqualTo(updatedUsername);
         assertThat(updatedUser.getWeightKg()).isEqualTo(updatedWeight);
-        assertThat(updatedUser.getWorkouts()).isNotNull();
     }
 
     @Test

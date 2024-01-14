@@ -13,6 +13,5 @@ public class WorkoutDTO {
     private Long id;
     private String name;
     private String description;
-    private Long userId;
     private List<ExerciseDTO> exercises;
 }

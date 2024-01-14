@@ -2,7 +2,7 @@ package com.fitnesstracker.fitnesstrackerapi.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fitnesstracker.fitnesstrackerapi.models.User;
-import com.fitnesstracker.fitnesstrackerapi.services.UserServiceImpl;
+import com.fitnesstracker.fitnesstrackerapi.services.User.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

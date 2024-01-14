@@ -1,4 +1,4 @@
-package com.fitnesstracker.fitnesstrackerapi.services;
+package com.fitnesstracker.fitnesstrackerapi.services.User;
 
 import com.fitnesstracker.fitnesstrackerapi.dtos.UserDTO;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.*;

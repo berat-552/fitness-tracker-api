@@ -38,13 +38,13 @@ public class User {
 
     public static User TestUser() {
         return User.builder()
+                .id(1L)
                 .username("testing_username123")
                 .email("john.doe123@example.com")
                 .password("strongPassword?/14zT")
                 .dob(LocalDate.parse("2002-11-05"))
                 .heightCm(179.5)
                 .weightKg(75.5)
-                .workouts(Workout.TestWorkouts(5))
                 .build();
     }
 }

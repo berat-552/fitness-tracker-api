@@ -4,6 +4,7 @@ import com.fitnesstracker.fitnesstrackerapi.dtos.UserDTO;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.*;
 import com.fitnesstracker.fitnesstrackerapi.models.User;
 import com.fitnesstracker.fitnesstrackerapi.repositories.UserRepository;
+import com.fitnesstracker.fitnesstrackerapi.services.User.UserServiceImpl;
 import com.fitnesstracker.fitnesstrackerapi.util.UserValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

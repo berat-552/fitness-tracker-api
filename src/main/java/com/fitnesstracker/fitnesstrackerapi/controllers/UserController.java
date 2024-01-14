@@ -3,7 +3,7 @@ package com.fitnesstracker.fitnesstrackerapi.controllers;
 import com.fitnesstracker.fitnesstrackerapi.dtos.UserDTO;
 import com.fitnesstracker.fitnesstrackerapi.exceptions.*;
 import com.fitnesstracker.fitnesstrackerapi.models.User;
-import com.fitnesstracker.fitnesstrackerapi.services.UserServiceImpl;
+import com.fitnesstracker.fitnesstrackerapi.services.User.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
